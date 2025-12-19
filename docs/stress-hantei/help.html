@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ヘルプ - ストレス判定図デモ</title>
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+
+<body>
+  <div class="app" style="grid-template-columns: 1fr">
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar__left">
+          <h1 class="pageTitle">ヘルプ</h1>
+          <div class="pageSubtitle">基本の使い方と用語（1ページ）</div>
+        </div>
+        <div class="topbar__right">
+          <a class="btn btn--ghost" href="./">アプリに戻る</a>
+          <a class="btn btn--ghost" href="https://github.com/rx-tomo/pjt024" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </header>
+      <section class="content">
+        <div class="grid">
+          <div class="card card--solid">
+            <div class="card__title">使い方（最短）</div>
+            <div class="card__desc">
+              <ol style="margin: 10px 0 0 18px">
+                <li>「データ選択」：デモデータを選ぶ（必要ならCSV読み込み）</li>
+                <li>「分析選択」：判定図/ランキング/分布/シミュレーションを選ぶ</li>
+                <li>「分析結果」：性別タブ・集計・フィルタで比較しながら確認</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="card card--solid">
+            <div class="card__title">用語（やさしめ）</div>
+            <div class="card__desc">
+              <ul>
+                <li>
+                  <strong>4尺度</strong>：簡易版12項目（q1..q12）から作る4つの集計点（量的負担/コントロール/上司支援/同僚支援）。
+                </li>
+                <li>
+                  <strong>健康リスク</strong>：係数と式（<code>100×exp(...)</code>）から算出する相対指標。標準集団の平均を100として表します。
+                </li>
+                <li>
+                  <strong>総合健康リスク</strong>：図1（量的負担×コントロール）と図2（上司支援×同僚支援）の健康リスクを合成した値（図1×図2÷100）。
+                </li>
+                <li>
+                  <strong>全国平均: legacy</strong>：テクニカルノート掲載の全国平均値（デフォルト）。
+                </li>
+                <li>
+                  <strong>全国平均: updated</strong>：テクニカルノート中で併記されている訂正値（あるいは更新値）を使うモード。
+                </li>
+                <li>
+                  <strong>画像依存せず描画</strong>：判定図の等リスク線は、元サイトの画像を貼り付けるのではなく、係数と式からブラウザで計算して線を引いています。
+                </li>
+                <li>
+                  <strong>集計（groupBy）</strong>：部署/職種/拠点/勤務形態/年代など、どの切り口で平均・リスクを出すか。
+                </li>
+                <li>
+                  <strong>フィルタ</strong>：対象を絞って集計する（例：拠点=東京だけ、など）。
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card card--solid">
+            <div class="card__title">指標の説明（図1/図2/総合健康リスク）</div>
+            <div class="card__desc">
+              <p style="margin: 0">
+                本アプリは、公開資料（入口ページ配下のテクニカルノート／結果の読み方）の説明に基づき、ブラウザ内で係数と式を用いて計算します。
+              </p>
+              <div style="height: 8px"></div>
+              <ul>
+                <li>
+                  <strong>4尺度（q1..q12）</strong>：回答（1〜4点）を合計して尺度点にします。
+                  <div class="muted" style="margin-top: 6px">
+                    量的負担=<code>q1+q2+q3</code> / コントロール=<code>q4+q5+q6</code> /
+                    上司支援=<code>q7+q9+q11</code> / 同僚支援=<code>q8+q10+q12</code>
+                  </div>
+                </li>
+                <li>
+                  <strong>図1の健康リスク</strong>：量的負担×コントロールの組み合わせから算出します（全国平均からのずれを指数関数で換算）。
+                  <div class="muted" style="margin-top: 6px">
+                    <code>risk1 = 100 × exp((workload - A)×α + (control - B)×β)</code>
+                  </div>
+                </li>
+                <li>
+                  <strong>図2の健康リスク</strong>：上司支援×同僚支援の組み合わせから算出します。
+                  <div class="muted" style="margin-top: 6px">
+                    <code>risk2 = 100 × exp((supervisorSupport - C)×γ + (coworkerSupport - D)×δ)</code>
+                  </div>
+                </li>
+                <li>
+                  <strong>総合健康リスク</strong>：図1と図2のリスクを合成した指標です。
+                  <div class="muted" style="margin-top: 6px">
+                    <code>total = risk1 × risk2 ÷ 100</code>
+                  </div>
+                </li>
+                <li>
+                  <strong>全国平均（A,B,C,D）</strong>：基準となる平均値です。<code>legacy</code>（デフォルト）/ <code>updated</code> を切り替えられます。
+                </li>
+                <li>
+                  <strong>係数（α,β,γ,δ）</strong>：テクニカルノートに示されている係数です（性別で異なるため、画面は男女別タブで表示します）。
+                </li>
+                <li>
+                  <strong>この数値が表すもの</strong>：全国平均を100とした「相対指標」です。100より大きいほど全国平均より高い傾向、100より小さいほど低い傾向として読みます（厳密な読み方は元資料に従います）。
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card card--solid">
+            <div class="card__title">注意（デモの位置づけ）</div>
+            <div class="card__desc">
+              <ul>
+                <li>表示しているデモデータはダミーです（実データは含みません）。</li>
+                <li>
+                  シミュレーションは「式に入れたらどう変わるか」の試算であり、施策の因果効果を保証するものではありません。
+                </li>
+                <li>医療判断・診断のためのツールではありません。</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card card--solid">
+            <div class="card__title">出典・参考</div>
+            <div class="card__desc">
+              <ul>
+                <li>
+                  東京大学 医学部精神医学教室「仕事のストレス判定図」（入口）：
+                  <a href="https://mental.m.u-tokyo.ac.jp/old/hanteizu/" target="_blank"
+                    rel="noopener">https://mental.m.u-tokyo.ac.jp/old/hanteizu/</a>
+                </li>
+                <li>
+                  ※上記配下に、テクニカルノート・質問票・結果の読み方・使用条件（利用条件）等のページがあります。
+                </li>
+                <li>
+                  関連（係数や平均値の更新に関する情報が参照されることがあるサイト）：
+                  <a href="https://www.tmu-ph.ac/" target="_blank" rel="noopener">https://www.tmu-ph.ac/</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+
+</html>

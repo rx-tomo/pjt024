@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>仕事のストレス判定図（デモ分析）</title>
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="assets/style.css" />
+  </head>
+  <body>
+    <div class="app" id="app">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand__title">ストレス判定図</div>
+          <div class="brand__subtitle">デモ分析（ブラウザ単体）</div>
+        </div>
+
+        <nav class="stepper" aria-label="操作ステップ">
+          <button class="stepper__step" data-step="data" type="button">
+            <span class="stepper__num" aria-hidden="true">1</span>
+            <span class="stepper__label">データ選択</span>
+          </button>
+          <button class="stepper__step" data-step="analysis" type="button">
+            <span class="stepper__num" aria-hidden="true">2</span>
+            <span class="stepper__label">分析選択</span>
+          </button>
+          <button class="stepper__step" data-step="results" type="button">
+            <span class="stepper__num" aria-hidden="true">3</span>
+            <span class="stepper__label">分析結果</span>
+          </button>
+        </nav>
+
+        <div class="sidebar__footer">
+          <div class="hint">
+            <div class="hint__title">メモ</div>
+            <div class="hint__text">
+              デモ用ダミーデータです。計算はブラウザ内でリアルタイムに行います。
+            </div>
+          </div>
+          <div class="sidebar__links">
+            <a class="link" href="help.html" target="_blank" rel="noopener">ヘルプ</a>
+            <span class="muted" style="font-size:12px;">・</span>
+            <a class="link" href="https://github.com/rx-tomo/pjt024" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div class="topbar__left">
+            <h1 class="pageTitle" id="pageTitle">データ選択</h1>
+            <div class="pageSubtitle" id="pageSubtitle">
+              分析対象のサンプルデータを選んでください
+            </div>
+          </div>
+          <div class="topbar__right" id="topbarRight"></div>
+        </header>
+
+        <section class="content" id="content" aria-live="polite"></section>
+      </main>
+    </div>
+
+    <script type="module" src="src/app.js"></script>
+  </body>
+</html>

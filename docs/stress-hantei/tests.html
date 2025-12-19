@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tests - ストレス判定図デモ</title>
+    <link rel="stylesheet" href="assets/style.css" />
+  </head>
+  <body>
+    <div class="app" style="grid-template-columns: 1fr">
+      <main class="main">
+        <header class="topbar">
+          <div class="topbar__left">
+            <h1 class="pageTitle">ミニテスト</h1>
+            <div class="pageSubtitle">ロジック（スコア/リスク）の簡易チェック</div>
+          </div>
+        </header>
+        <section class="content">
+          <div class="card" id="out"></div>
+        </section>
+      </main>
+    </div>
+    <script type="module" src="src/tests.js"></script>
+  </body>
+</html>
